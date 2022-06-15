@@ -1,0 +1,29 @@
+server:
+  port: 7890
+spring:
+  application:
+    name: consumer_2
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+          zk-nodes: localhost:2181
+          auto-create-topics: true
+      bindings:
+        myInput:
+          #destination: stream-demo-trans
+          destination: stream-demo
+          group: group
+          consumer:
+            partitioned: true   #开启分区
+      instance-count: 2 #消费者总数
+      instance-index: 1
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
